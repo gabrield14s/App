@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View,
-    Text,
-    StyleSheet, 
-    TextInput,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    KeyboardAvoidingViewBase
-} from "react-native"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native"
 
 import firebase from "../../config/firebase";
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -16,18 +9,16 @@ export default function Login(){
     const [senha, setSenha] = useState("");
     const [errorLogin, setErrorLogin] = useState("");
 
-    const loginFirebase = () => {
+    /*const loginFirebase = () => {
 
-    }
+    }*/
 
-    useEffect(() => {
+    /*useEffect(() => {
 
-    }, []);
+    }, []);*/
 
     return(
-        <KeyboardAvoidingView 
-            behavior={Plataform.OS === "ios" ? "padding" : "height"}
-        >
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <Text style={styles.title}>Login</Text>
             <TextInput
                 style={styles.input}
@@ -51,6 +42,8 @@ export default function Login(){
 
 const styles = StyleSheet.create({
     container: {
-        
+        flex: 1,
+        justifyContent: "center",
+        alignItens: "center"
     }
 });

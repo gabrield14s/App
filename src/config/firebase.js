@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import "firebase/storage"
+import Firebase from "firebase/storage"
 
 var firebaseConfig = {
     apiKey: "AIzaSyCydDfQf65BoKp7SC5lNMPgyIaIwPf6xdw",
@@ -11,5 +11,5 @@ var firebaseConfig = {
     measurementId: "G-MHS9Z9718L"
 };
 
-const firebase = initializeApp(firebaseConfig);
+let firebase = initializeApp(firebaseConfig);
 export default firebase;
