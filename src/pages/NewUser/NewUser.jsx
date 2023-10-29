@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Pressable } from "react-native"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Pressable, Platform } from "react-native"
 
 import firebase from "../../config/firebase";
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -16,7 +16,7 @@ export default function NewUser() {
     const register = async() => {
         try{
             await authService.create(name, email, password);
-            navigation.goBack()
+            navigation.goBack();
             console.log("Funfou");
         }
         catch(error){
@@ -25,7 +25,6 @@ export default function NewUser() {
     }
 
     return (
-        // <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <View style={styles.container}>
             <View style={styles.box}>
                 <Text style={styles.title}>Register</Text>
@@ -58,7 +57,6 @@ export default function NewUser() {
                 </Pressable>
             </View>
         </View>
-        // </KeyboardAvoidingView>
     )
 }
 
