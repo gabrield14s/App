@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import { PrivateValueStore, useNavigation } from "@react-navigation/native";
 
 import firebase from "../../config/firebase";
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { authService } from "../../service/auth";
+import * as Animatable from "react-native-animatable";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -15,16 +16,18 @@ export default function Login() {
     const login = async() => {
         try{
             await authService.login(email, password);
-            navigation.navigate("Home")
+            navigation.navigate("Home");
+            setErrorLogin("");
         }
         catch(error){
             console.log(error);
+            setErrorLogin("Erro de Login");
         }
     }
 
     return (
         // <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <View style={styles.container}>
+        <Animatable.View style={styles.container} animation="fadeInUp">
             <View style={styles.box}>
                 <Text style={styles.title}>Login</Text>
                 <TextInput
@@ -43,14 +46,15 @@ export default function Login() {
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                 ></TextInput>
-                <Pressable style={styles.button} onPress={login}>
+                <TouchableOpacity style={styles.button} onPress={login}>
                     <Text style={{color: "white"}}>Login</Text>
-                </Pressable>
+                </TouchableOpacity>
                 <Text onPress={() => navigation.navigate("NewUser")} style={styles.link}>
                     Register
                 </Text>
+                    {errorLogin&&<Text style={styles.messageError}>{errorLogin}</Text>}
             </View>
-        </View>
+        </Animatable.View>
         // </KeyboardAvoidingView>
     )
 }
@@ -89,10 +93,13 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     link: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        textAlign: "center",
         color: "blue",
+        marginTop: 15
+    },
+    messageError: {
+        textAlign: "center",
+        color: "#df0a21",
         marginTop: 15
     }
 });

@@ -1,7 +1,7 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { authService } from "../../service/auth";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native-web";
+import { View } from "react-native";
 
 export default function Home() {
     const navigation = useNavigation();
@@ -15,9 +15,9 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Home</Text>
-            <Pressable onPress={logOut} style={styles.buttonLogOut}>
+            <TouchableOpacity onPress={logOut} style={styles.buttonLogOut}>
                 <Text style={styles.textButton}>Log out</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     );
     
