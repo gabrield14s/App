@@ -1,5 +1,5 @@
 import firebase, { dataBase } from "../config/firebase";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { doc,  setDoc} from "firebase/firestore"
 
 export const authService = {
@@ -15,5 +15,10 @@ export const authService = {
     logOut: async() => {
         const auth = getAuth();
         await auth.signOut();
+    },
+    forgotPassword: async (email) => {
+        const auth = getAuth();
+        await sendPasswordResetEmail(auth, email);
     }
 }
+

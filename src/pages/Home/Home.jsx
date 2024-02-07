@@ -9,7 +9,6 @@ export default function Home() {
     const logOut = async() => {
         await authService.logOut();
         navigation.goBack();
-
     }
 
     return (
@@ -22,6 +21,7 @@ export default function Home() {
     );
     
 }
+
 
 const styles = StyleSheet.create({
     container: {

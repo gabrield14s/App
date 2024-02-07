@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { PrivateValueStore, useNavigation } from "@react-navigation/native";
 
-import firebase from "../../config/firebase";
+import firebase, { auth } from "../../config/firebase";
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { authService } from "../../service/auth";
 import * as Animatable from "react-native-animatable";
@@ -46,6 +46,10 @@ export default function Login() {
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                 ></TextInput>
+                <Text
+                onPress={() => navigation.navigate("ForgotPassword")}
+                style={styles.forgotPassword}
+                >Forgot your Password?</Text>
                 <TouchableOpacity style={styles.button} onPress={login}>
                     <Text style={{color: "white"}}>Login</Text>
                 </TouchableOpacity>
@@ -81,6 +85,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         marginBottom: 10,
         padding: 5
+    },
+    forgotPassword: {
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 5,
+        marginBottom: 12,
     },
     button: {
         display: "flex",
