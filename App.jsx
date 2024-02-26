@@ -18,6 +18,9 @@ export default function App() {
         <Stack.Screen
         name="NewUser"
         component={NewUser}
+        options={
+          {title: "Register"}
+        }
         />
         <Stack.Screen
         name="Home"
@@ -26,6 +29,9 @@ export default function App() {
         <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
+        options={
+          {title: "Recover your password"}
+        }
         />
       </Stack.Navigator>
     </NavigationContainer>
