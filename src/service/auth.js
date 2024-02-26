@@ -1,6 +1,6 @@
-import firebase, { dataBase } from "../config/firebase";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { doc,  setDoc} from "firebase/firestore"
+import { dataBase } from "../config/firebase";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from "firebase/auth";
+import { doc, setDoc} from "firebase/firestore"
 
 export const authService = {
     create: async(name, email, password) => {

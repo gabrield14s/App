@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity} from "react-native";
 import { authService } from "../../service/auth";
-import { AuthError } from "firebase/auth";
 
 export default function ForgotPassword(){
     const [email, setEmail] = useState('');
@@ -10,9 +9,9 @@ export default function ForgotPassword(){
     const recoverPassword = async () => {
         try{
             await authService.forgotPassword(email);
-        } catch(AuthError) {
-            if (AuthError.message === "Firebase: Error (auth/invalid-email)."){
-                setMessageError("Please, insert a email valid");
+        } catch(Error) {
+            if (Error.message === "Firebase: Error (auth/invalid-email)."){
+                setMessageError("Please, insert a valid email");
             }
         }
     }

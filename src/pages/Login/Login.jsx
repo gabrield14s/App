@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
-import { PrivateValueStore, useNavigation } from "@react-navigation/native";
-
-import firebase, { auth } from "../../config/firebase";
-import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native";
+// import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { authService } from "../../service/auth";
 import * as Animatable from "react-native-animatable";
 
