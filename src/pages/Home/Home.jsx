@@ -10,6 +10,7 @@ export default function Home() {
         await authService.logOut();
         navigation.goBack();
     }
+    
 
     return (
         <View style={styles.container}>

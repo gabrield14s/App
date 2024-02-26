@@ -4,15 +4,18 @@ import { authService } from "../../service/auth";
 
 export default function ForgotPassword(){
     const [email, setEmail] = useState('');
-    const [messageError, setMessageError] = useState('');
+    const [dynamicStyle, setDynamicStyle] = useState(styles.messageError2)
+    const [messageError, setMessageError] = useState("");
 
     const recoverPassword = async () => {
         try{
             await authService.forgotPassword(email);
+            setMessageError("Verify your Email")
+            setDynamicStyle(styles.messageError2)
         } catch(Error) {
-            if (Error.message === "Firebase: Error (auth/invalid-email)."){
-                setMessageError("Please, insert a valid email");
-            }
+            setMessageError("Please, insert a valid email");
+            setDynamicStyle(styles.messageError1)
+            console.log(Error)
         }
     }
 
@@ -30,7 +33,7 @@ export default function ForgotPassword(){
                 <TouchableOpacity style={styles.button} onPress={recoverPassword}>
                     <Text style={{color: "white"}}>Submit</Text>
                 </TouchableOpacity>
-                {messageError&&<Text style={styles.messageError}>{messageError}</Text>}
+                <Text style={dynamicStyle.message}>{messageError}</Text>
             </View>
         </View>
     );
@@ -74,9 +77,18 @@ const styles = StyleSheet.create({
         color: "blue",
         marginTop: 15
     },
-    messageError: {
-        textAlign: "center",
-        color: "#df0a21",
-        marginTop: 15
+    messageError1: {
+        message: {
+            textAlign: "center",
+            color: "#df0a21",
+            marginTop: 15
+        }
+    },
+    messageError2: {
+        message: {
+            textAlign: "center",
+            color: "#58FA58",
+            marginTop: 15
+        }
     }
 });
