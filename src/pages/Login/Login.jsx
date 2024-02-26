@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useState} from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -10,16 +10,19 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [errorLogin, setErrorLogin] = useState("");
     const navigation = useNavigation();
+    const [dynamicStyle, setDynamicStyle] = useState(styles.messageError2);
 
     const login = async() => {
         try{
             await authService.login(email, password);
             navigation.navigate("Home");
             setErrorLogin("");
+            setDynamicStyle(styles.messageError2)
         }
         catch(error){
             console.log(error);
-            setErrorLogin("Erro de Login");
+            setErrorLogin("Invalid Email or Password");
+            setDynamicStyle(styles.messageError1)
         }
     }
 
@@ -45,8 +48,8 @@ export default function Login() {
                     value={password}
                 ></TextInput>
                 <Text
-                onPress={() => navigation.navigate("ForgotPassword")}
-                style={styles.forgotPassword}
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                    style={styles.forgotPassword}
                 >Forgot your Password?</Text>
                 <TouchableOpacity style={styles.button} onPress={login}>
                     <Text style={{color: "white"}}>Login</Text>
@@ -54,7 +57,7 @@ export default function Login() {
                 <Text onPress={() => navigation.navigate("NewUser")} style={styles.link}>
                     Register
                 </Text>
-                    {errorLogin&&<Text style={styles.messageError}>{errorLogin}</Text>}
+                <Text style={dynamicStyle.message}>{errorLogin}</Text>
             </View>
         </Animatable.View>
         // </KeyboardAvoidingView>
@@ -105,9 +108,16 @@ const styles = StyleSheet.create({
         color: "blue",
         marginTop: 15
     },
-    messageError: {
-        textAlign: "center",
-        color: "#df0a21",
-        marginTop: 15
+    messageError1: {
+        message: {
+            textAlign: "center",
+            color: "#df0a21",
+            marginTop: 15,
+        }
+    },
+    messageError2: {
+        message: {
+            display: "none"
+        }
     }
 });
