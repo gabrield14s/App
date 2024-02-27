@@ -1,5 +1,6 @@
-import { Text, StyleSheet, TouchableOpacity, Image} from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
 import { authService } from "../../service/auth";
+import ModalPassword from "../ModalPassword/ModalPassword";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { useEffect, useState } from "react";
@@ -28,6 +29,7 @@ export default function Home() {
         }
 
         setPasswordValue(password);
+        setModalVisible(true);
         console.log(password);
     }
 
@@ -59,6 +61,10 @@ export default function Home() {
                 <Text style={styles.buttonText}>Generate Password</Text>
             </TouchableOpacity>
             
+            <Modal visible={modalVisible} animationType="fade">
+                <ModalPassword password={passwordValue} handleClose={() => setModalVisible(false)}></ModalPassword>
+            </Modal>
+
         </View>
         </>
     );
