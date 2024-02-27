@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Pressable, View} from "react-native"
+import { Text, StyleSheet, Pressable, View, TextInput} from "react-native"
 import { TouchableOpacity } from "react-native-web";
 
 export default function ModalPassword({password, handleClose}) {
@@ -8,7 +8,7 @@ export default function ModalPassword({password, handleClose}) {
             <View style={styles.content}>
                 <Text style={styles.title}>Password Created</Text>
                 <Pressable style={styles.innerPassword}>
-                    <Text style={styles.text}>{password}</Text>
+                    <TextInput style={styles.text} value={password}></TextInput>
                 </Pressable>
 
                 <View style={styles.buttonArea}>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: "#fff",
-        textAlign: "center"
+        textAlign: "center",
     },
     buttonArea: {
         width: "80%",
@@ -61,12 +61,15 @@ const styles = StyleSheet.create({
         backgroundColor: "blue"
     },
     button: {
+        width: "100%",
         marginTop: 7,
         marginBottom: 7,
         backgroundColor: "blue",
-        borderRadius: 8   
+        borderRadius: 8,
+        justifyContent: "center",
+        alignItems: "center"
     },
     buttonText: {
-        color: "#fff"
+        color: "#fff",
     }
 })

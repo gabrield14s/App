@@ -41,8 +41,11 @@ export default function Home() {
                 <Text style={styles.textButton}>Log out</Text>
             </TouchableOpacity>
         </View>
+
+        
         <View style={styles.container}>
 
+            <Image source={require("../../../assets/logo.png")} style={{ width: 160, height: 200 }}></Image>
             <Text style={{marginTop: 40, fontSize: 20}}>{size} caracters</Text>
 
             <View style={styles.area}>
