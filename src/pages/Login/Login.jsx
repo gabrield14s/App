@@ -15,7 +15,6 @@ export default function Login() {
     const login = async() => {
         try{
             await authService.login(email, password);
-            navigation.navigate("Home");
             setErrorLogin("");
             setDynamicStyle(styles.messageError2)
         }
