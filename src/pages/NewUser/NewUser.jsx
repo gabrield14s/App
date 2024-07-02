@@ -18,7 +18,6 @@ export default function NewUser() {
         try{
             await authService.create(name, email, password);
             navigation.goBack();
-            console.log("Funfou");
             setErrorRegister("");
         }
         catch(error){

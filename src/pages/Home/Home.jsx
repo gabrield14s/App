@@ -21,7 +21,7 @@ export default function Home() {
         navigation.goBack();
     }
 
-    const generatePassword = () => {
+    const generatePassword = async () => {
         let password = "";
 
         for (let i = 0; i < size; i++){
@@ -29,8 +29,8 @@ export default function Home() {
         }
 
         setPasswordValue(password);
+        await authService.setPasswordGeneratedInFirestore(password);
         setModalVisible(true);
-        console.log(password);
     }
 
     
