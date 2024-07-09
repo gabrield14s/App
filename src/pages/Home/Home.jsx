@@ -1,6 +1,6 @@
 import { Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
 import { authService } from "../../service/auth";
-import ModalPassword from "../ModalPassword/ModalPassword";
+import ModalPassword from "../../Components/ModalPassword";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { useEffect, useState } from "react";

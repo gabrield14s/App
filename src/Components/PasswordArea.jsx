@@ -1,12 +1,12 @@
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export default function PasswordArea({ data, removePassword }) {
+export default function PasswordArea({ data, removePassword, handleOpen }) {
     return(
         <View style={styles.passwordArea}>
             <Text style={styles.text}>{data}</Text>
             <View style={{flexDirection: "row", gap: 16}}>
-                <Pressable>
+                <Pressable onPress={handleOpen}>
                     <Feather
                     name="edit"
                     size={20}

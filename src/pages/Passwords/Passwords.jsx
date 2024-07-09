@@ -1,13 +1,15 @@
-import { SafeAreaView, View, Text, FlatList, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, FlatList, StyleSheet, Modal } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
 import { authService } from "../../service/auth";
 import PasswordArea from "../../Components/PasswordArea";
+import ModalEditPassword from "../../Components/ModalEditPassword";
 
 export default function Passwords() {
     const focused = useIsFocused();
     const [listPasswords, setListPasswords] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false)
     
     const loadPasswordsList = async () => {
         const passwords = await authService.getPasswordsList();
@@ -34,9 +36,13 @@ export default function Passwords() {
                 <FlatList
                     data={listPasswords}
                     keyExtractor={ (item) => String(item) }
-                    renderItem={ ({ item } ) => <PasswordArea data={item} removePassword={ () => deletePassword(item) } /> }
+                    renderItem={ ({ item } ) => <PasswordArea data={item} removePassword={ () => deletePassword(item) } handleOpen={ () => setModalVisible(true) }/> }
                 />
             </View>
+
+            <Modal visible={modalVisible}>
+                <ModalEditPassword handleClose={() => setModalVisible(false)}></ModalEditPassword>
+            </Modal>
         </SafeAreaView>
     );
 }
