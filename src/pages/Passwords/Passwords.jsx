@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, FlatList } from "react-native";
+import { SafeAreaView, View, Text, FlatList, StyleSheet } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
@@ -26,8 +26,8 @@ export default function Passwords() {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <View>
-                <Text>My passwords</Text>
+            <View style={styles.header}>
+                <Text style={{color: "white"}}>My passwords</Text>
             </View>
 
             <View>
@@ -40,3 +40,11 @@ export default function Passwords() {
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    header: {
+        backgroundColor: "blue",
+        padding: 16,
+        marginBottom: 16
+    }
+})

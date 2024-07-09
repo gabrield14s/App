@@ -5,12 +5,20 @@ export default function PasswordArea({ data, removePassword }) {
     return(
         <View style={styles.passwordArea}>
             <Text style={styles.text}>{data}</Text>
-            <Pressable onPress={removePassword}>
-                <Feather
-                name="trash"
-                size={20}
-                color={"red"}
-            /></Pressable>
+            <View style={{flexDirection: "row", gap: 16}}>
+                <Pressable>
+                    <Feather
+                    name="edit"
+                    size={20}
+                    color={"white"}
+                /></Pressable>
+                <Pressable onPress={removePassword}>
+                    <Feather
+                    name="trash"
+                    size={20}
+                    color={"red"}
+                /></Pressable>
+            </View>
         </View>
     );
 
