@@ -1,13 +1,13 @@
 import { Text, StyleSheet, Pressable, View, TextInput} from "react-native"
 import { TouchableOpacity } from "react-native-web";
 
-export default function ModalEditPassword( {handleClose} ) {
+export default function ModalEditPassword( {handleClose, valuePassword, setStateEditPass} ) {
     return(
         <View style={styles.container}>
             <View style={styles.content}>
                 <Text style={styles.title}>Edit</Text>
                 <View style={styles.innerPassword}>
-                    <TextInput style={styles.text}></TextInput>
+                    <TextInput style={styles.text} value={valuePassword} onChangeText={setStateEditPass}></TextInput>
                 </View>
 
                 <View style={styles.buttonArea}>

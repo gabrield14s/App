@@ -1,5 +1,6 @@
 import { dataBase } from "../config/firebase";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword} from "firebase/auth";
+import { update } from "firebase/database";
 import { arrayUnion, arrayRemove, doc, setDoc, updateDoc, getDoc} from "firebase/firestore"
 
 export const authService = {
@@ -22,7 +23,12 @@ export const authService = {
     },
     setPasswordGeneratedInFirestore: async (passwordGenerated) => {
         const auth = getAuth();
-        await updateDoc(doc(dataBase, "users", auth.currentUser.uid), {passwordsGenerated: arrayUnion(passwordGenerated)});
+
+        const docRef = doc(dataBase, "users", auth.currentUser.uid);
+        const docSnp = await getDoc(docRef);
+        const passwordsListGet = docSnp.data().passwordsGenerated
+        const autoIncrement = passwordsListGet.length > 0 ? passwordsListGet[passwordsListGet.length - 1].id + 1 : 1;
+        await updateDoc(doc(dataBase, "users", auth.currentUser.uid), {passwordsGenerated: arrayUnion({id: autoIncrement, pass: passwordGenerated}) });
     },
     getPasswordsList: async () => {
         const auth = getAuth();
@@ -36,6 +42,13 @@ export const authService = {
         const docReference = doc(dataBase, "users", auth.currentUser.uid);
         await updateDoc(docReference, {
             passwordsGenerated: arrayRemove(password)
+        })
+    },
+    updatePassword: async (listPassword) => {
+        const auth = getAuth();
+        const docReference = doc(dataBase, "users", auth.currentUser.uid);
+        await updateDoc(docReference, {
+            passwordsGenerated: listPassword
         })
     }
 }

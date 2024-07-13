@@ -1,15 +1,20 @@
-import { SafeAreaView, View, Text, FlatList, StyleSheet, Modal } from "react-native";
+import { SafeAreaView, View, Text, FlatList, StyleSheet, Modal, Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
 import { authService } from "../../service/auth";
 import PasswordArea from "../../Components/PasswordArea";
 import ModalEditPassword from "../../Components/ModalEditPassword";
+import { update } from "firebase/database";
+import { updatePassword } from "firebase/auth";
 
 export default function Passwords() {
     const focused = useIsFocused();
     const [listPasswords, setListPasswords] = useState([]);
     const [modalVisible, setModalVisible] = useState(false)
+    const [editPass, setEditPass] = useState('');
+    const [idTemp, setIdTemp] = useState();
+    const [passTemp, setPassTemp] = useState();
     
     const loadPasswordsList = async () => {
         const passwords = await authService.getPasswordsList();
@@ -22,9 +27,47 @@ export default function Passwords() {
         setListPasswords(passwords)
     }
 
+    const updateListPassword = async () => {
+        const passwords = await authService.getPasswordsList();
+        const index = passwords.findIndex( pass => pass.id == idTemp)
+        passwords[index].pass = editPass;
+        await authService.updatePassword(passwords);
+        setModalVisible(false);
+        console.log(idTemp)
+    }
+
+    const handleButtonClick = (id, pass) => {
+        setEditPass(pass);
+        setModalVisible(true);
+
+        console.log(`Item ID: ${id}`);
+        setIdTemp(id);
+        console.log(`Item Pass: ${pass}`);
+        setPassTemp(pass);
+    };
+
     useEffect( () => {
         loadPasswordsList();
-    }, [focused]);
+    }, [focused, updatePassword]);
+    
+    /*
+    const updatePasswordTitle = async (item) => {
+        try {
+          await authService.updatePasswordTitle(item.id, editTitle);
+          setListPasswords(listPasswords.map(password => {
+            if (password.id === item.id) {
+              return { ...password, title: editTitle };
+            }
+            return password;
+          }));
+          // Limpa o estado de edição
+          setEditingItem(null);
+          setEditTitle('');
+        } catch (error) {
+          console.error('Erro ao atualizar título da senha:', error);
+        }
+    };
+    */
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -35,13 +78,13 @@ export default function Passwords() {
             <View>
                 <FlatList
                     data={listPasswords}
-                    keyExtractor={ (item) => String(item) }
-                    renderItem={ ({ item } ) => <PasswordArea data={item} removePassword={ () => deletePassword(item) } handleOpen={ () => setModalVisible(true) }/> }
+                    keyExtractor={ (item) => item.id}
+                    renderItem={ ({ item } ) => <PasswordArea id={item.id} data={item.pass} removePassword={ () => deletePassword(item) } onButtonClick={handleButtonClick}/> }
                 />
             </View>
 
             <Modal visible={modalVisible}>
-                <ModalEditPassword handleClose={() => setModalVisible(false)}></ModalEditPassword>
+                <ModalEditPassword handleClose={updateListPassword} valuePassword={editPass} setStateEditPass={(text) => setEditPass(text)}></ModalEditPassword>
             </Modal>
         </SafeAreaView>
     );
