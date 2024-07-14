@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import { useEffect, useState } from "react";
 import Slider from "@react-native-community/slider"
+import { Feather } from "@expo/vector-icons";
 
 
 export default function Home() {
@@ -13,12 +14,18 @@ export default function Home() {
     const [size, setSize] = useState(6);
     const [passwordValue, setPasswordValue] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
+    const [nameUser, setNameUser] = useState();
 
     let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*()_+=";
     
     const logOut = async() => {
         await authService.logOut();
         navigation.goBack();
+    }
+
+    const showNameUser = async() => {
+        const name = await authService.getNameUser();
+        setNameUser(name)
     }
 
     const generatePassword = async () => {
@@ -33,15 +40,28 @@ export default function Home() {
         setModalVisible(true);
     }
 
+    useEffect( () => {
+        showNameUser();
+    }, []);
+
     
     return (
         <>
-        <View style={styles.logOutArea}>
-            <TouchableOpacity onPress={logOut} style={styles.buttonLogOut}>
-                <Text style={styles.textButton}>Log out</Text>
-            </TouchableOpacity>
+        <View style={styles.header}>
+            <View>
+                <Text style={{color: "black", fontSize: 18}}>Welcome, {nameUser}</Text>
+            </View>
+            <View style={styles.logOutArea}>
+                <TouchableOpacity onPress={logOut} style={styles.buttonLogOut}>
+                <Feather
+                    name="log-out"
+                    size={20}
+                    color={"white"}
+                ></Feather>
+                <Text style={styles.textButton}>Log Out</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-
         
         <View style={styles.container}>
 
@@ -76,6 +96,13 @@ export default function Home() {
 
 
 const styles = StyleSheet.create({
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        margin: 12,
+        marginHorizontal: 50
+    },
     container: {
         flex: 1,
         alignItems: "center",
@@ -90,8 +117,10 @@ const styles = StyleSheet.create({
     buttonLogOut: {
         backgroundColor: "#df0a21",
         padding: 10,
-        marginTop: 15,
-        borderRadius: 5
+        borderRadius: 5,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 6
     },
     textButton: {
         color: "white"

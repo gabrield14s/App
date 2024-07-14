@@ -21,12 +21,18 @@ export const authService = {
         const auth = getAuth();
         await sendPasswordResetEmail(auth, email);
     },
+    getNameUser: async () => {
+        const auth = getAuth();
+        const docRef = doc(dataBase, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        const nameUser = await docSnap.data().name;
+        return nameUser;
+    },
     setPasswordGeneratedInFirestore: async (passwordGenerated) => {
         const auth = getAuth();
-
         const docRef = doc(dataBase, "users", auth.currentUser.uid);
         const docSnp = await getDoc(docRef);
-        const passwordsListGet = docSnp.data().passwordsGenerated
+        const passwordsListGet = docSnp.data().passwordsGenerated;
         const autoIncrement = passwordsListGet.length > 0 ? passwordsListGet[passwordsListGet.length - 1].id + 1 : 1;
         await updateDoc(doc(dataBase, "users", auth.currentUser.uid), {passwordsGenerated: arrayUnion({id: autoIncrement, pass: passwordGenerated}) });
     },

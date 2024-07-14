@@ -33,41 +33,18 @@ export default function Passwords() {
         passwords[index].pass = editPass;
         await authService.updatePassword(passwords);
         setModalVisible(false);
-        console.log(idTemp)
     }
 
     const handleButtonClick = (id, pass) => {
         setEditPass(pass);
         setModalVisible(true);
-
-        console.log(`Item ID: ${id}`);
         setIdTemp(id);
-        console.log(`Item Pass: ${pass}`);
         setPassTemp(pass);
     };
 
     useEffect( () => {
         loadPasswordsList();
-    }, [focused, updatePassword]);
-    
-    /*
-    const updatePasswordTitle = async (item) => {
-        try {
-          await authService.updatePasswordTitle(item.id, editTitle);
-          setListPasswords(listPasswords.map(password => {
-            if (password.id === item.id) {
-              return { ...password, title: editTitle };
-            }
-            return password;
-          }));
-          // Limpa o estado de edição
-          setEditingItem(null);
-          setEditTitle('');
-        } catch (error) {
-          console.error('Erro ao atualizar título da senha:', error);
-        }
-    };
-    */
+    }, [focused, modalVisible]);
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -83,7 +60,7 @@ export default function Passwords() {
                 />
             </View>
 
-            <Modal visible={modalVisible}>
+            <Modal visible={modalVisible} animationType="fade">
                 <ModalEditPassword handleClose={updateListPassword} valuePassword={editPass} setStateEditPass={(text) => setEditPass(text)}></ModalEditPassword>
             </Modal>
         </SafeAreaView>
